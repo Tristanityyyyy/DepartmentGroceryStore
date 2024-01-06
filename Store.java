@@ -11,15 +11,18 @@ public class Store{
 	static ArrayList price = new ArrayList();
 	
 	static void products() {
-		prodHash.put("00001","Dozen of eggs");
-		prodHash.put("00002","50 kg Rice");
-		prodHash.put("00003","50 kg BrownRice");
-		prodHash.put("00004","Cooking Oil");
-		prodHash.put("00005","Vinegar / Suka");
-		prodHash.put("00006", "Bottled Water");
-		prodHash.put("00007","Pack of Coffee");
-		prodHash.put("00008", "Milk Shake");
-		prodHash.put("00009", "Ice Cream");
+		prodHash.put("000001","Dozen of eggs");
+		prodHash.put("000002","50 kg Rice");
+		prodHash.put("000003","50 kg BrownRice");
+		prodHash.put("000004","Cooking Oil");
+		prodHash.put("000005","Vinegar / Suka");
+		prodHash.put("000006", "Bottled Water");
+		prodHash.put("000007","Pack of Coffee");
+		prodHash.put("000008", "Milk Shake");
+		prodHash.put("000009", "Ice Cream");
+		prodHash.put("000010", "Soy Sauce");
+		prodHash.put("000011", "1/4 White Sugar");
+		prodHash.put("000012", "1/4 Brown Sugar");
 	}
 	
 	public static void buyProd(){
@@ -44,24 +47,24 @@ public class Store{
 		System.out.println("\t \t \t==================================================================================================================");
 		
 		boolean a = true;
-		System.out.println("PLEASE TYPE [N] WHEN YOU ARE DONE.");
+		System.out.println("PLEASE TYPE [D] WHEN YOU ARE DONE.");
 		while(a) {
-			System.out.print("\t \t \t \t" + "Enter product id: \t \t");
+			System.out.print("\t \t \t \t" + "Enter product I.D/Code: \t \t");
 			String prodId = scn.next();
 			System.out.print("\t \t \t \t" + "Enter product quantity: \t");
 			String qt = scn.next();
 			System.out.println();
-			if(prodId.equalsIgnoreCase("N") || qt.equalsIgnoreCase("N")) {
+			if(prodId.equalsIgnoreCase("D") || qt.equalsIgnoreCase("D")) {
 					a = false;
 			}
-			else if(!prodId.equalsIgnoreCase("N")) {
+			else if(!prodId.equalsIgnoreCase("D")) {
 					q.offer(prodHash.get(prodId));
 					q2.offer(qt);
 			}
 		}
 		
 		System.out.println("\t \t \t==================================================================================================================");
-		System.out.println("\t \t \t \tProduct \t \t \t \t \t Quantity       Price");
+		System.out.println("\t \t \t \tProduct \t \t \t \t \t Quantity:        Price: ");
 		while(!q.isEmpty()) {
 		System.out.print("\t \t \t \t" + q.poll());
 		System.out.println("\t \t \t \t \t" + q2.poll());
