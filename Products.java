@@ -1,4 +1,5 @@
 package package1;
+
 import java.util.*;
 
 public class Products {
@@ -29,7 +30,7 @@ public class Products {
 	            switch (choice) {
 	                
 	                case 1:
-	                	s.buyProd();
+	                	Store.buyProd();
 	                	break;
 	                    
 	                case 2:
@@ -76,7 +77,7 @@ public class Products {
 		else {
 			System.out.println("\t \t \t \t" + "Account doesn't exist, Please try logging in again or register a new one. ");
 			Products p = new Products();
-			p.main(null);
+			Products.main(null);
 		}
 	}
 	
@@ -92,12 +93,11 @@ public class Products {
 	  
 	  
 	  public static void cancelProduct() {
-		  System.out.println("Enter product name: ");
+		  System.out.println("Your transaction has been canceled.");
+                  System.out.println("Would you like to buy products or exit?");
 		  
 	  }
-	  
-	
-	
+	 
 }
 
 	
