@@ -22,9 +22,9 @@ public class Computation{
 			vat = Math.round(vat);
 			vatPrice = vat;
 		}
+		double price = theTotalPrices.poll();
 		while(!theTotalPrices.isEmpty()) {
-			double price = theTotalPrices.poll();
-			if(theTotalPrices.size() != 1) {
+			if(!theTotalPrices.isEmpty()) {
 				price += theTotalPrices.poll();;
 				double vat = price * 0.12; 
 				if(theTotalPrices.isEmpty()) {
