@@ -1,0 +1,62 @@
+package package1;
+import java.util.*;
+public class Computation{
+	static Store s = new Store();
+	
+	static Queue <Double> theTotalPrices = new LinkedList(); 
+	static Double totalPrice;
+	static Double vatPrice;
+	static double pricewCharge;
+	
+	public static void computationProcess() {
+		for (int i = 0; i <= s.orderedQuantity.size(); i++) {
+			for(int j = 0; j <= s.orderedPrice.size(); j++) {
+				double compute = s.orderedQuantity.peek() * s.orderedPrice.poll() ;
+				theTotalPrices.offer(compute);
+				s.quant.offer(s.orderedQuantity.poll());
+			}
+		}
+		double price = theTotalPrices.poll();
+		while(!theTotalPrices.isEmpty()) {
+			price += theTotalPrices.poll();;
+			double vat = price * 0.12; 
+			if(theTotalPrices.isEmpty()) {
+				totalPrice = price;
+				vat = Math.round(vat);
+				vatPrice = vat;
+				break;
+			}
+		}
+		totalWithVat();
+	}
+	
+	public void computationProcessCancel() {
+		while(true) {
+			if(!Store.quant2.isEmpty()) {
+				double compute = Store.quant2.poll() * Store.orderedPrice.poll();
+				theTotalPrices.offer(compute);
+			}
+			else if(Store.quant2.isEmpty()){
+				break;
+			}
+		}
+		
+		
+		double price = theTotalPrices.poll();
+		while(!theTotalPrices.isEmpty()) {
+			price += theTotalPrices.poll();;
+			double vat = price * 0.12; 
+			if(theTotalPrices.isEmpty()) {
+				totalPrice = price;
+				vat = Math.round(vat);
+				vatPrice = vat;
+				break;
+			}
+		}
+		totalWithVat();
+	}
+	public static void totalWithVat() {
+		double sum = totalPrice + vatPrice;
+    	pricewCharge = sum; 
+	}
+}
