@@ -34,6 +34,13 @@ public class Store{
 		prodHash.put("00011", "Soda Drink       ");
 		prodHash.put("00012", "Corned Beef      ");
 		prodHash.put("00013", "All purpose Cream");
+		prodHash.put("00014", "Canned Sardines  ");
+		prodHash.put("00015", "Glass bottled ketchup");
+		prodHash.put("00016", "Plastic Utensils ");
+		prodHash.put("00017", "Chocolate Milk Drink ");
+		prodHash.put("00018", "Canned luncheon meat ");
+		prodHash.put("00019", "Mini-bottled pepper  ");
+		prodHash.put("00020", "Plastic cups     ");
 		
 	}
 	
