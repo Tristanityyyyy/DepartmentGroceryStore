@@ -34,13 +34,6 @@ public class Store{
 		prodHash.put("00011", "Soda Drink       ");
 		prodHash.put("00012", "Corned Beef      ");
 		prodHash.put("00013", "All purpose Cream");
-		prodHash.put("00014", "Canned Sardines  ");
-		prodHash.put("00015", "Glass bottled ketchup");
-		prodHash.put("00016", "Plastic Utensils ");
-		prodHash.put("00017", "Chocolate Milk Drink ");
-		prodHash.put("00018", "Canned luncheon meat ");
-		prodHash.put("00019", "Mini-bottled pepper  ");
-		prodHash.put("00020", "Plastic cups     ");
 		
 	}
 	
@@ -145,6 +138,7 @@ public class Store{
 	    System.out.println("\t \t \t \t" + "| 1. Pay                         |");
 	    System.out.println("\t \t \t \t" + "| 2. Cancel product              |");
 	    System.out.println("\t \t \t \t" + "| 3. Exit                        |");
+	    System.out.println("\t \t \t \t" + "| 4. Menu                        |");
 	    System.out.println("\t \t \t \t" + "==================================");
 	    System.out.print("\t \t \t \t" + "Enter your choice: ");
 	    int choice = scn.nextInt();
@@ -164,6 +158,8 @@ public class Store{
 			//PAANO PAG KULANG ANG BAYAD NG CUSTOMER MAGIGISA KA NG PROF
 	    case 3:
 	    	break;
+	    case 4:
+	    	
 	    }
 	    
 	}
@@ -203,25 +199,29 @@ public class Store{
 		//resultname dyan yung
 		
 		// lahat nasave na sa keme pwera sa gusto maremove
-		while(!cancProd.isEmpty()) {
-			System.out.print("\t \t \t \t" + cancProd.peek());
-			System.out.print("\t \t \t \t" + quant.peek());
-			
-			cancProd2.offer(cancProd.poll());
-			quant2.offer(quant.poll()); //SAVEDDDD NAAA QT
-			int incre3 = 0;
-			
-			for(Map.Entry <String , String> e : prodHash.entrySet()) {
-				if(e.getValue().equals(cancProd2.peek())) {
-					System.out.println("\t \t   "+ price.get(incre3));
-					orderedPrice.offer(price.get(incre3)); ////SAVEDDDD NAAAA PRICESSS
-					incre3++;
-					cancProd3.offer(cancProd2.poll());
+		if(!cancProd.isEmpty()) {
+				while(!cancProd.isEmpty()) {
+				System.out.print("\t \t \t \t" + cancProd.peek());
+				System.out.print("\t \t \t \t" + quant.peek());
+				
+				cancProd2.offer(cancProd.poll());
+				quant2.offer(quant.poll()); //SAVEDDDD NAAA QT
+				int incre3 = 0;
+				
+				for(Map.Entry <String , String> e : prodHash.entrySet()) {
+					if(e.getValue().equals(cancProd2.peek())) {
+						System.out.println("\t \t   "+ price.get(incre3));
+						orderedPrice.offer(price.get(incre3)); ////SAVEDDDD NAAAA PRICESSS
+						incre3++;
+						cancProd3.offer(cancProd2.poll());
+					}
+					else {
+						incre3++;
+					}
 				}
-				else {
-					incre3++;
-				}
-			}
+			}	
+		}else if(cancProd.isEmpty()) {
+			Products.menu();
 		}
 		c.computationProcessCancel();
 		displayPayment();
