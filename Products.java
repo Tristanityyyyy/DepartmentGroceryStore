@@ -62,6 +62,7 @@ public class Products {
 			System.out.println("\t \t \t \t \t \t \t \t" + "      Contact No : 09564551233");
 			System.out.println("\t \t \t==================================================================================================================");
 			System.out.println("\t \t \t******************************************************************************************************************");
+		        System.out.println("\t \t \t \t" + "Welcome, Customer!");
 			System.out.println("\t \t \t \t" + "Please log-in your account or sign up.");
 			System.out.print("\t \t \t \t" + "Press 'L' to log-in. ");
 	}
