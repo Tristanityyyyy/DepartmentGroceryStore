@@ -15,24 +15,41 @@ public class Computation{
 				theTotalPrices.offer(compute);
 				s.quant.offer(s.orderedQuantity.poll());
 			}
-		}
-		if(theTotalPrices.size() == 1) {
-			totalPrice = theTotalPrices.poll();
-			double vat = totalPrice * 0.12;
-			vat = Math.round(vat);
-			vatPrice = vat;
-		}
-		double price = theTotalPrices.poll();
-		while(!theTotalPrices.isEmpty()) {
-			if(!theTotalPrices.isEmpty()) {
-				price += theTotalPrices.poll();;
-				double vat = price * 0.12; 
-				if(theTotalPrices.isEmpty()) {
-					totalPrice = price;
-					vat = Math.round(vat);
-					vatPrice = vat;
-					break;
+		} 
+		
+		
+		
+		
+		// NullException sa results
+		
+		
+		
+		
+		
+		boolean a = true;
+		while(a) {
+			if(theTotalPrices.size() == 1) {
+				totalPrice = theTotalPrices.poll();
+				double vat = totalPrice * 0.12;
+				vat = Math.round(vat);
+				vatPrice = vat;
+				a=false;
+			}
+			else if(theTotalPrices.size() > 1) {
+				double price = theTotalPrices.poll();
+				while(!theTotalPrices.isEmpty()) {
+					if(!theTotalPrices.isEmpty()) {
+						price += theTotalPrices.poll();;
+						double vat = price * 0.12; 
+						if(theTotalPrices.isEmpty()) {
+							totalPrice = price;
+							vat = Math.round(vat);
+							vatPrice = vat;
+							break;
+						}
+					}
 				}
+				a=false;
 			}
 		}
 		totalWithVat();
@@ -66,7 +83,7 @@ public class Computation{
 				totalPrice = price;
 				vat = Math.round(vat);
 				vatPrice = vat;
-				break:
+				break;
 			}
 		}
 		totalWithVat();
