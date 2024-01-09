@@ -43,8 +43,7 @@ public class Store{
 	
 	static double cash;
 	
-	public static void buyProd() throws Exception{
-		
+	public static void buyProd(){
 		try {
 			Collections.addAll(quantity, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100);
 			Collections.addAll(price,230.00, 2000.00, 2500.00, 130.00, 250.00, 25.00, 180.00 , 100.00, 300.00, 270.00, 85.00, 70.00, 150.00);
@@ -69,7 +68,7 @@ public class Store{
 			}
 			
 			
-			System.out.println("\t \t \t===================================================================================================================");
+			System.out.println("\t \t \t==================================================================================================================");
 			
 			boolean a = true;
 			
@@ -79,6 +78,10 @@ public class Store{
 				prodId = scn.next();
 				
 				if(prodId.equalsIgnoreCase("X") ) {
+					if(prodId.isEmpty()) {
+						c.computationProcessCancel();
+						displayPayment();
+					}
 					break;
 				}
 				
@@ -91,38 +94,43 @@ public class Store{
 						resultQuant.offer(qt);
 				}
 			}
-	
-			System.out.println("\t \t \t===================================================================================================================");
+	System.out.println("");
+			System.out.println("\t \t \t==================================================================================================================");
 			System.out.println("\t \t \t \t|Product| \t \t \t \t \t|Quantity|         |Price|");
-			System.out.println("\t \t \t===================================================================================================================");
+			System.out.println("\t \t \t==================================================================================================================");
 			
-			while(!resultName.isEmpty()) {
-				
-				System.out.print("\t \t \t \t" + resultName.peek());
-				System.out.print("\t \t \t \t" + resultQuant.peek());
-				
-				orderedProd.offer(resultName.poll());
-				orderedQuantity.offer(resultQuant.poll()); //SAVEDDDD NAAA QT
-
-				int incre2 = 0;
+			if(resultName.isEmpty()) {
+				Products.main(null);
+			}
+			else if(!resultName.isEmpty()) {
+				while(!resultName.isEmpty()){
+					System.out.print("\t \t \t \t" + resultName.peek());
+					System.out.print("\t \t \t \t" + resultQuant.peek());
+					
+					orderedProd.offer(resultName.poll());
+					orderedQuantity.offer(resultQuant.poll()); //SAVEDDDD NAAA QT
 	
-				for(Map.Entry <String , String> e : prodHash.entrySet()) {
-					if(e.getValue().equals(orderedProd.peek())) { // keme.peek
-						System.out.println("\t \t   "+ price.get(incre2));
-						orderedPrice.offer(price.get(incre2)); ////SAVEDDDD NAAAA PRICESSS
-						incre2++;
-						cancProd.offer(orderedProd.poll());
-					}
-					else {
-						incre2++;
-					}
-				}	    
+					int incre2 = 0;
+		
+					for(Map.Entry <String , String> e : prodHash.entrySet()) {
+						if(e.getValue().equals(orderedProd.peek())) { // keme.peek
+							System.out.println("\t \t   "+ price.get(incre2));
+							orderedPrice.offer(price.get(incre2)); ////SAVEDDDD NAAAA PRICESSS
+							incre2++;
+							cancProd.offer(orderedProd.poll());
+						}
+						else {
+							incre2++;
+						}
+					}	 
+				}
 			}
 			c.computationProcess();
 			displayPayment();
 		}
 			catch(InputMismatchException e) {
 				System.out.println("\t \t \t \tPlease try again");
+				Products.main((null));
 			}
 	}
 	
@@ -143,6 +151,11 @@ public class Store{
 	    System.out.println("\t \t \t \t" + "==================================");
 	    System.out.print("\t \t \t \t" + "Enter your choice: ");
 	    int choice = scn.nextInt();
+	    while(!cancProd.isEmpty()) {
+	    	Admin.soldProd.offer(cancProd.poll());
+	    }
+		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
+
 	    switch(choice) {
 	    
 	    case 1:
@@ -152,16 +165,18 @@ public class Store{
 			Math.round(change);
 		  	System.out.println("\t \t \t \t \t \t \t \t \t \t \t CASH    : " + cash);
 		  	System.out.println("\t \t \t \t \t \t \t \t \t \t \t CHANGE  : " + change);
-			break;
+		  	Products.main(null);
+		  	break;
 	    case 2:
 	    	cancelProduct();
-	    	//cancelProduct();
-			//PAANO PAG KULANG ANG BAYAD NG CUSTOMER MAGIGISA KA NG PROF
 	    case 3:
 	    	break;
 	    case 4:
-	    	
+	    	Products.main(null);
+	    case 5:
+	    	Admin.display();
 	    }
+	    	
 	    
 	}
 	
@@ -170,7 +185,7 @@ public class Store{
 	static Queue <String> cancProd2 = new LinkedList();
 	static Queue <Double> quant2 = new LinkedList(); 
 	static Queue <String> cancProd3 = new LinkedList();
-
+	static Queue <String> admin1 = new LinkedList();
 	public static void cancelProduct() {
 		System.out.println("\t \t \t \t" + "PLEASE ENTER [X] WHEN YOU ARE DONE");
 		boolean a = true;
@@ -189,41 +204,44 @@ public class Store{
 			}
 			if(prodHash.containsKey(prodId2)) {
 				cancProd.remove(prodHash.get(prodId2));
-			}
-			else if(prodId2.equalsIgnoreCase("X")) {
 				break;
 			}
+			else if(prodId2.equalsIgnoreCase("X")) {
+				displayPayment();
+			}else if(!cancProd.contains(prodId2)){
+				displayPayment();
+			}
 		}
-		System.out.println("\t \t \t===================================================================================================================");
-		System.out.println("\t \t \t \t|Product| \t \t \t \t \t|Quantity|         |Price|");
-		System.out.println("\t \t \t===================================================================================================================");
-		//resultname dyan yung
-		
-		// lahat nasave na sa keme pwera sa gusto maremove
 		if(!cancProd.isEmpty()) {
+		System.out.println("\t \t \t==================================================================================================================");
+		System.out.println("\t \t \t \t|Product| \t \t \t \t \t|Quantity|         |Price|");
+		System.out.println("\t \t \t==================================================================================================================");
+		
 				while(!cancProd.isEmpty()) {
 				System.out.print("\t \t \t \t" + cancProd.peek());
 				System.out.print("\t \t \t \t" + quant.peek());
 				
 				cancProd2.offer(cancProd.poll());
-				quant2.offer(quant.poll()); //SAVEDDDD NAAA QT
+				quant2.offer(quant.poll()); 
 				int incre3 = 0;
 				
-				for(Map.Entry <String , String> e : prodHash.entrySet()) {
-					if(e.getValue().equals(cancProd2.peek())) {
-						System.out.println("\t \t   "+ price.get(incre3));
-						orderedPrice.offer(price.get(incre3)); ////SAVEDDDD NAAAA PRICESSS
-						incre3++;
-						cancProd3.offer(cancProd2.poll());
-					}
-					else {
-						incre3++;
+					for(Map.Entry <String , String> e : prodHash.entrySet()) {
+						if(e.getValue().equals(cancProd2.peek())) {
+							System.out.println("\t \t   "+ price.get(incre3));
+							orderedPrice.offer(price.get(incre3));
+							incre3++;
+							cancProd3.offer(cancProd2.poll());
+						}
+						else {
+							incre3++;
+						}
 					}
 				}
-			}	
-		}else if(cancProd.isEmpty()) {
-			Products.menu();
-		}
+				if(cancProd.isEmpty()) {
+					c.computationProcessCancel();
+					displayPayment();
+				}	
+		}		
 		c.computationProcessCancel();
 		displayPayment();
 	}
