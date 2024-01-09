@@ -1,0 +1,59 @@
+package package1;
+import java.util.*;
+
+public class Admin{
+	static Store s = new Store(); 
+	static Queue <Double> cashOn = new LinkedList();
+	static Scanner scn = new Scanner(System.in);
+	static Queue <String> soldProd = new LinkedList();
+	static Queue <Double> soldQt = new LinkedList();
+	
+	static void display(){
+		boolean b = true;
+		while(b) {
+			System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
+			System.out.println("\t \t \t \t" + "==================================");
+		    System.out.println("\t \t \t \t" + "| 1. Check the Money             |");
+		    System.out.println("\t \t \t \t" + "| 2. Check the Sold Products     |");
+		    System.out.println("\t \t \t \t" + "| 3. Exit			  |");
+		    System.out.println("\t \t \t \t" + "==================================");
+			System.out.print("\t \t \t \t" + "Enter your choice: ");
+			char choice = scn.next().charAt(0);
+			
+			switch(choice) {
+				case '1':
+					cashonCashier();
+				case '2':
+					
+				case '3':
+					b = false;
+			}
+		}
+		Products.main(null);
+	}
+	void checkProducts() {
+		System.out.println("\t \t \t==================================================================================================================");
+		System.out.println("\t \t \t \t|Sold| \t \t \t \t \t|Quantity|         |Price|");
+		System.out.println("\t \t \t==================================================================================================================");
+	}
+	static void cashonCashier() {
+		
+		if(!cashOn.isEmpty()) {
+				if(cashOn.size() == 1) {
+					System.out.println("\t \t \t \t" + "The money in the cashier is " + cashOn.poll());
+					System.out.println("\t \t \t==================================================================================================================");
+
+				}
+				else {
+					double cash = cashOn.poll();
+					cash += cashOn.poll();
+					if(cashOn.isEmpty()) {
+						System.out.println("\t \t \t \t" + "The money in the cashier is " + cash);
+						System.out.println("\t \t \t==================================================================================================================");
+					}
+				}
+		}
+		
+		
+	}
+}
