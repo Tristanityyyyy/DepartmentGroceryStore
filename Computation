@@ -1,4 +1,5 @@
-package package1;
+package products;
+
 import java.util.*;
 public class Computation{
 	static Store s = new Store();
@@ -16,15 +17,6 @@ public class Computation{
 				s.quant.offer(s.orderedQuantity.poll());
 			}
 		} 
-		
-		
-		
-		
-		// NullException sa results
-		
-		
-		
-		
 		
 		boolean a = true;
 		while(a) {
