@@ -145,7 +145,7 @@ public class Store{
 		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
 		System.out.println("\t \t \t \t" + "==================================");
 	    System.out.println("\t \t \t \t" + "| 1. Pay                         |");
-	    System.out.println("\t \t \t \t" + "| 2. Cancel product              |");
+	    System.out.println("\t \t \t \t" + "| 2. Cancel the products         |");
 	    System.out.println("\t \t \t \t" + "| 3. Exit                        |");
 	    System.out.println("\t \t \t \t" + "| 4. Menu                        |");
 	    System.out.println("\t \t \t \t" + "==================================");
@@ -165,6 +165,8 @@ public class Store{
 			Math.round(change);
 		  	System.out.println("\t \t \t \t \t \t \t \t \t \t \t CASH    : " + cash);
 		  	System.out.println("\t \t \t \t \t \t \t \t \t \t \t CHANGE  : " + change);
+		  	Admin.cashOn.offer(c.pricewCharge);
+		  	
 		  	Products.main(null);
 		  	break;
 	    case 2:
@@ -185,65 +187,12 @@ public class Store{
 	static Queue <String> cancProd2 = new LinkedList();
 	static Queue <Double> quant2 = new LinkedList(); 
 	static Queue <String> cancProd3 = new LinkedList();
-	static Queue <String> admin1 = new LinkedList();
+	
 	public static void cancelProduct() {
-		System.out.println("\t \t \t \t" + "PLEASE ENTER [X] WHEN YOU ARE DONE");
-		boolean a = true;
-		while(a) {
-			System.out.print("\t \t \t \t" + "Enter product id: \t \t");
-			String prodId2 = scn.next();
-			int incre4 = 0;
-			for(Map.Entry <String , String> e : prodHash.entrySet()) {
-				if(prodHash.containsKey(prodId2)) {
-					quant.offer(price.get(incre4)); //removing of price na di kailangan
-					incre4++;
-				}
-				else {
-					incre4++;
-				}
-			}
-			if(prodHash.containsKey(prodId2)) {
-				cancProd.remove(prodHash.get(prodId2));
-				break;
-			}
-			else if(prodId2.equalsIgnoreCase("X")) {
-				displayPayment();
-			}else if(!cancProd.contains(prodId2)){
-				displayPayment();
-			}
+		while(!resultName.isEmpty()) {
+			resultName.poll();
+			resultQuant.poll();
+
 		}
-		if(!cancProd.isEmpty()) {
-		System.out.println("\t \t \t==================================================================================================================");
-		System.out.println("\t \t \t \t|Product| \t \t \t \t \t|Quantity|         |Price|");
-		System.out.println("\t \t \t==================================================================================================================");
-		
-				while(!cancProd.isEmpty()) {
-				System.out.print("\t \t \t \t" + cancProd.peek());
-				System.out.print("\t \t \t \t" + quant.peek());
-				
-				cancProd2.offer(cancProd.poll());
-				quant2.offer(quant.poll()); 
-				int incre3 = 0;
-				
-					for(Map.Entry <String , String> e : prodHash.entrySet()) {
-						if(e.getValue().equals(cancProd2.peek())) {
-							System.out.println("\t \t   "+ price.get(incre3));
-							orderedPrice.offer(price.get(incre3));
-							incre3++;
-							cancProd3.offer(cancProd2.poll());
-						}
-						else {
-							incre3++;
-						}
-					}
-				}
-				if(cancProd.isEmpty()) {
-					c.computationProcessCancel();
-					displayPayment();
-				}	
-		}		
-		c.computationProcessCancel();
-		displayPayment();
 	}
 }
-
