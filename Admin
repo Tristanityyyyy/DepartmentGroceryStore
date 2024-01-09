@@ -1,63 +1,82 @@
-package package1;
+
+package products;
+
 import java.util.*;
 
-public class Admin{
-	static Store s = new Store(); 
-	static Queue <Double> cashOn = new LinkedList();
-	static Scanner scn = new Scanner(System.in);
-	static Queue <String> soldProd = new LinkedList();
-	static Queue <Double> soldQt = new LinkedList();
-	
-	static void display(){
-		boolean b = true;
-		while(b) {
-			System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
-			System.out.println("\t \t \t \t" + "==================================");
-		    System.out.println("\t \t \t \t" + "| 1. Check the Money             |");
-		    System.out.println("\t \t \t \t" + "| 2. Check the Sold Products     |");
-		    System.out.println("\t \t \t \t" + "| 3. Exit	           	  |");
-		    System.out.println("\t \t \t \t" + "==================================");
-			System.out.print("\t \t \t \t" + "Enter your choice: ");
-			char choice = scn.next().charAt(0);
-			
-			switch(choice) {
-				case '1':
-					cashonCashier();
-					break;
-				case '2':
-					checkProducts();
-				case '3':
-					b = false;
-			}
-		}
-		Products.main(null);
-	}
-	static void checkProducts() {
-		System.out.println("\t \t \t==================================================================================================================");
-		System.out.println("\t \t \t \t|Sold| \t \t \t \t \t|Quantity|         ");
-		System.out.println("\t \t \t==================================================================================================================");
-		while(!soldProd.isEmpty()) {
-			System.out.println("\t \t \t \t"+soldProd.poll()+" \t \t \t \t \t"+ soldQt.poll());
-		}
-	}
-	static void cashonCashier() {
-		
-		if(!cashOn.isEmpty()) {
-				if(cashOn.size() == 1) {
-					System.out.println("\t \t \t \t" + "The money in the cashier is " + cashOn.poll());
-					System.out.println("\t \t \t==================================================================================================================");
 
-				}
-				else {
-					double cash = cashOn.poll();
-					cash += cashOn.poll();
-					if(cashOn.isEmpty()) {
-						System.out.println("\t \t \t \t" + "The money in the cashier is " + cash);
-						System.out.println("\t \t \t==================================================================================================================");
-					}
-				}
-		}
-		
-		
-	}
+public class Admin {
+    static Store s = new Store();
+    static Queue<Double> cashOn = new LinkedList();
+    static Scanner scn = new Scanner(System.in);
+    static Queue<String> soldProd = new LinkedList();
+    static Queue<Double> soldQt = new LinkedList();
+
+    static void display() {
+        Scanner scn = new Scanner(System.in);
+        System.out.print("\t \t \t \t" + "Enter your admin username: ");
+        String usern = scn.next();
+        System.out.print("\t \t \t \t" + "Enter your admin password: ");
+        String pass = scn.next();
+
+        if (usern.equals("admin") && pass.equals("admin123")) {
+            System.out.println("\t \t \t \t" + "Admin account successfully logged in.");
+            System.out.println("\t \t \t==================================================================================================================");
+        } else {
+            System.out.println("\t \t \t \t" + "Invalid admin credentials. Exiting...");
+            return;
+        }
+
+        boolean b = true;
+        while (b) {
+            System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
+            System.out.println("\t \t \t \t" + "==================================");
+            System.out.println("\t \t \t \t" + "| 1. Check the Money             |");
+            System.out.println("\t \t \t \t" + "| 2. Check the Sold Products     |");
+            System.out.println("\t \t \t \t" + "| 3. Exit                        |");
+            System.out.println("\t \t \t \t" + "==================================");
+            System.out.print("\t \t \t \t" + "Enter your choice: ");
+            char choice = scn.next().charAt(0);
+
+            switch (choice) {
+                case '1' -> cashonCashier();
+                case '2' -> checkProducts();
+                case '3' -> {
+                    b = false;
+                    System.out.println("\t \t \t \t" + "Exiting admin panel...");
+                }
+                default -> System.out.println("\t \t \t \t" + "Invalid input. Please choose a valid option.");
+            }
+        }
+    }
+
+    static void checkProducts() {
+        if (!soldProd.isEmpty()) {
+            System.out.println("\t \t \t==================================================================================================================");
+            System.out.println("\t \t \t \t|Sold| \t \t \t \t \t|Quantity|         ");
+            while (!soldProd.isEmpty()) {
+                System.out.println("\t \t \t \t" + soldProd.poll() + " \t \t \t \t \t" + soldQt.poll());
+                System.out.println("\t \t \t==================================================================================================================");
+            }
+        } else {
+            System.out.println("\t \t \t \t" + "No products have been sold yet.");
+        }
+    }
+
+    static void cashonCashier() {
+        if (!cashOn.isEmpty()) {
+            if (cashOn.size() == 1) {
+                System.out.println("\t \t \t \t" + "The money in the cashier is " + cashOn.poll());
+                System.out.println("\t \t \t==================================================================================================================");
+            } else {
+                double cash = cashOn.poll();
+                cash += cashOn.poll();
+                if (cashOn.isEmpty()) {
+                    System.out.println("\t \t \t \t" + "The money in the cashier is " + cash);
+                    System.out.println("\t \t \t==================================================================================================================");
+                }
+            }
+        } else {
+            System.out.println("\t \t \t \t" + "No money in the cashier.");
+        }
+    }
 }
