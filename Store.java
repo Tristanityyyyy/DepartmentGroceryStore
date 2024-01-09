@@ -1,4 +1,4 @@
-package package1;
+package products;
 
 import java.util.*;
 
@@ -34,7 +34,13 @@ public class Store{
 		prodHash.put("00011", "Soda Drink       ");
 		prodHash.put("00012", "Corned Beef      ");
 		prodHash.put("00013", "All purpose Cream");
-		
+		prodHash.put("00014", "Canned Sardines  ");
+		prodHash.put("00015", "Glass bottled ketchup");
+		prodHash.put("00016", "Plastic Utensils ");
+		prodHash.put("00017", "Chocolate Milk Drink ");
+		prodHash.put("00018", "Canned luncheon meat ");
+		prodHash.put("00019", "Mini-bottled pepper  ");
+		prodHash.put("00020", "Plastic cups     ");
 	}
 	
 	static String prodId;
@@ -45,9 +51,9 @@ public class Store{
 	
 	public static void buyProd(){
 		try {
-			Collections.addAll(quantity, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100);
-			Collections.addAll(price,230.00, 2000.00, 2500.00, 130.00, 250.00, 25.00, 180.00 , 100.00, 300.00, 270.00, 85.00, 70.00, 150.00);
-			
+		Collections.addAll(quantity, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100);
+		Collections.addAll(price,230.00, 2000.00, 2500.00, 130.00, 250.00, 25.00, 180.00 , 100.00, 300.00, 270.00, 
+                                                   85.00, 70.00, 150.00, 45.00, 50.00, 100.00, 100.00, 50.00,  65.00, 30.00);
 			products();		
 			System.out.println("\t \t \t==================================================================================================================");
 			System.out.println("\t \t \t \t" + "Code \t " + "Product \t \t \t \t \t \t \t" + "Quantity    " + "Price \n");
@@ -130,12 +136,13 @@ public class Store{
 		}
 			catch(InputMismatchException e) {
 				System.out.println("\t \t \t \tPlease try again");
-				Products.main((null));
+				Products.displayMenu();
 			}
 	}
 	
 	public static void displayPayment() {
-		Scanner scn = new Scanner(System.in);
+		Scanner scn = new Scanner(System.in); 
+	
 		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------");
 		
 	  	System.out.println("\t \t \t \t \t \t \t \t \t \tTAXABLE TOTAL    : " + c.totalPrice);
@@ -154,7 +161,7 @@ public class Store{
 	    while(!cancProd.isEmpty()) {
 	    	Admin.soldProd.offer(cancProd.poll());
 	    }
-		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
+		
 
 	    switch(choice) {
 	    
@@ -166,23 +173,23 @@ public class Store{
 		  	System.out.println("\t \t \t \t \t \t \t \t \t \t \t CASH    : " + cash);
 		  	System.out.println("\t \t \t \t \t \t \t \t \t \t \t CHANGE  : " + change);
 		  	Admin.cashOn.offer(c.pricewCharge);
-		  	
-		  	Products.main(null);
+		  
 		  	break;
-	    case 2:
-	    	cancelProduct();
-	    case 3:
-	    	break;
-	    case 4:
-	    	Products.main(null);
-	    case 5:
-	    	Admin.display();
-	    }
-	    	
 	    
-	}
-	
-
+            case 2:
+                cancelProduct();
+                break;
+            case 3:
+                break;
+            case 4:
+                Products.displayMenu();
+                break;
+            default:
+                System.out.println("\t \t \t \t" + "Invalid input. Try again.");
+                System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
+        }
+            
+        }
 	static Queue <Double> quant = new LinkedList();
 	static Queue <String> cancProd2 = new LinkedList();
 	static Queue <Double> quant2 = new LinkedList(); 
@@ -193,6 +200,7 @@ public class Store{
 			resultName.poll();
 			resultQuant.poll();
 
-		}
+		}   
+            
 	}
 }
