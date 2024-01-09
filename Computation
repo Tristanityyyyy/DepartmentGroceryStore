@@ -2,11 +2,11 @@ package package1;
 import java.util.*;
 public class Computation{
 	static Store s = new Store();
-	
+	static Admin a = new Admin();
 	static Queue <Double> theTotalPrices = new LinkedList(); 
 	static Double totalPrice;
 	static Double vatPrice;
-	static double pricewCharge;
+	static double pricewCharge = 0;
 	
 	public static void computationProcess() {
 		for (int i = 0; i <= s.orderedQuantity.size(); i++) {
@@ -56,40 +56,47 @@ public class Computation{
 	}
 	
 	public void computationProcessCancel() {
-		while(true) {
+		
 			if(Store.cancProd3.isEmpty()) {
-				
+				Products.main(null);
 			}
 			else if(!Store.quant2.isEmpty()) {
+				Admin.soldQt.offer(Store.quant2.peek());
 				double compute = Store.quant2.poll() * Store.orderedPrice.poll();
+
 				theTotalPrices.offer(compute);
 			}
 			else if(Store.quant2.isEmpty()){
-				break;
 			}
-		}
-		if(theTotalPrices.size() == 1) {
-			totalPrice = theTotalPrices.poll();
-			double vat = totalPrice * 0.12;
-			vat = Math.round(vat);
-			vatPrice = vat;
-		}
+			else if(Store.cancProd.isEmpty()) {
+			}
 		
-		while(!theTotalPrices.isEmpty()) {
-			double price = theTotalPrices.poll();
-			price += theTotalPrices.poll();
-			double vat = price * 0.12; 
-			if(theTotalPrices.isEmpty()) {
-				totalPrice = price;
+			if(theTotalPrices.size() == 1) {
+				totalPrice = theTotalPrices.poll();
+				double vat = totalPrice * 0.12;
 				vat = Math.round(vat);
 				vatPrice = vat;
-				break;
 			}
-		}
-		totalWithVat();
-	}
+			
+			while(!theTotalPrices.isEmpty()) {
+				double price = theTotalPrices.poll();
+				price += theTotalPrices.poll();
+				double vat = price * 0.12; 
+				if(theTotalPrices.isEmpty()) {
+					totalPrice = price;
+					vat = Math.round(vat);
+					vatPrice = vat;
+					break;
+				}
+			}
+			totalWithVat();
+			}
+		
 	public static void totalWithVat() {
 		double sum = totalPrice + vatPrice;
     	pricewCharge = sum; 
+    	Admin.cashOn.offer(pricewCharge);
+    	
 	}
 }
+
