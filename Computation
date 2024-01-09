@@ -61,12 +61,12 @@ public class Computation{
 				Products.main(null);
 			}
 			else if(!Store.quant2.isEmpty()) {
-				Admin.soldQt.offer(Store.quant2.peek());
-				double compute = Store.quant2.poll() * Store.orderedPrice.poll();
-
+				double compute = Store.quant2.peek() * Store.orderedPrice.poll();
+				Admin.soldQt.offer(Store.quant2.poll());
 				theTotalPrices.offer(compute);
 			}
 			else if(Store.quant2.isEmpty()){
+
 			}
 			else if(Store.cancProd.isEmpty()) {
 			}
@@ -95,8 +95,7 @@ public class Computation{
 	public static void totalWithVat() {
 		double sum = totalPrice + vatPrice;
     	pricewCharge = sum; 
-    	Admin.cashOn.offer(pricewCharge);
+    	
     	
 	}
 }
-
