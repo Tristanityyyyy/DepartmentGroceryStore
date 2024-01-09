@@ -95,7 +95,7 @@ public class Products {
 	        System.out.println("\t \t \t \t" + "==================================");
 	        System.out.println("\t \t \t \t" + "| 1. Buy product                 |");
 	        System.out.println("\t \t \t \t" + "| 2. Exit                        |");
-		System.out.println("\t \t \t \t" + "| 3. Admin                       |");
+	        System.out.println("\t \t \t \t" + "| 3. Admin                       |");
 	        System.out.println("\t \t \t \t" + "==================================");
 	        System.out.print("\t \t \t \t" + "Enter your choice: ");
 	   }
