@@ -15,7 +15,7 @@ public class Admin{
 			System.out.println("\t \t \t \t" + "==================================");
 		    System.out.println("\t \t \t \t" + "| 1. Check the Money             |");
 		    System.out.println("\t \t \t \t" + "| 2. Check the Sold Products     |");
-		    System.out.println("\t \t \t \t" + "| 3. Exit			  |");
+		    System.out.println("\t \t \t \t" + "| 3. Exit	           	  |");
 		    System.out.println("\t \t \t \t" + "==================================");
 			System.out.print("\t \t \t \t" + "Enter your choice: ");
 			char choice = scn.next().charAt(0);
@@ -23,18 +23,22 @@ public class Admin{
 			switch(choice) {
 				case '1':
 					cashonCashier();
+					break;
 				case '2':
-					
+					checkProducts();
 				case '3':
 					b = false;
 			}
 		}
 		Products.main(null);
 	}
-	void checkProducts() {
+	static void checkProducts() {
 		System.out.println("\t \t \t==================================================================================================================");
-		System.out.println("\t \t \t \t|Sold| \t \t \t \t \t|Quantity|         |Price|");
+		System.out.println("\t \t \t \t|Sold| \t \t \t \t \t|Quantity|         ");
 		System.out.println("\t \t \t==================================================================================================================");
+		while(!soldProd.isEmpty()) {
+			System.out.println("\t \t \t \t"+soldProd.poll()+" \t \t \t \t \t"+ soldQt.poll());
+		}
 	}
 	static void cashonCashier() {
 		
