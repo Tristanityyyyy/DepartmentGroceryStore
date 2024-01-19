@@ -1,0 +1,70 @@
+package Admin;
+import java.util.*;
+
+public class Admin{
+	static Scanner scn = new Scanner(System.in);
+	static Queue <Double> adminInvent = new LinkedList();
+	static Queue <Double> moneyInvent = new LinkedList();
+	static Computation c = new Computation();
+	
+	static void invent() {
+		while(c.allTotal > 0) {
+			adminInvent.offer(c.allTotal);
+		}
+		while(!adminInvent.isEmpty()) {
+			double a = adminInvent.poll();
+			a += adminInvent.poll();
+			moneyInvent.offer(a);
+		}
+		
+		Products.menu();
+		
+		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
+		System.out.println("\t \t \t \t" + "==================================");
+	    System.out.println("\t \t \t \t" + "| 1. Check the inventory         |");
+	    System.out.println("\t \t \t \t" + "| 2. Create a Cashier Account    |");
+	    System.out.println("\t \t \t \t" + "| 3. Log-out                     |");
+	    System.out.println("\t \t \t \t" + "==================================");
+	    System.out.print("\t \t \t \t" + "Enter your choice: ");
+	    int choice = scn.nextInt();
+	  
+		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
+		
+		switch(choice) {
+		
+		case 1:
+			Store.allProd();
+			double sum = 0;
+			while(moneyInvent.isEmpty()) {
+				sum = moneyInvent.poll();
+			}
+			if(sum > 0) {
+				System.out.println(" ");
+				System.out.println("\t \t \t \t The current money in the cashier is " + moneyInvent);
+			}
+			else if(sum == 0) {
+				System.out.println(" ");
+				System.out.println("\t \t \t \t There are no money in the cashier");
+			}
+			break;
+		case 2:
+			createAcc();
+			break;
+		case 3:
+			Products.main(null);
+		}
+		
+		
+		
+	}
+	
+	static void createAcc() {
+		System.out.println("\t \t \t \t" + "==================================");
+	    System.out.print("\t \t \t \t" + "Create your username: ");
+	    Products.usernames.offer(scn.next());
+	    System.out.print("\t \t \t \t" + "Create your passwords: ");
+	    Products.passwords.offer(scn.next());
+	    System.out.println("\t \t \t \t" + "==================================");
+	    Admin.invent();
+	}
+}
