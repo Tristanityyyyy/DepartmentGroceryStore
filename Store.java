@@ -1,4 +1,4 @@
-package products;
+package package1;
 
 import java.util.*;
 
@@ -18,7 +18,6 @@ public class Store{
 	static Queue <Double>orderedPrice = new LinkedList();
 	static Computation c = new Computation();
 	
-	static Queue <String> cancProd = new LinkedList();
 	
 	static void products() {
 		prodHash.put("00001","Dozen of eggs     ");
@@ -34,13 +33,6 @@ public class Store{
 		prodHash.put("00011", "Soda Drink       ");
 		prodHash.put("00012", "Corned Beef      ");
 		prodHash.put("00013", "All purpose Cream");
-		prodHash.put("00014", "Canned Sardines  ");
-		prodHash.put("00015", "Glass bottled ketchup");
-		prodHash.put("00016", "Plastic Utensils ");
-		prodHash.put("00017", "Chocolate Milk Drink ");
-		prodHash.put("00018", "Canned luncheon meat ");
-		prodHash.put("00019", "Mini-bottled pepper  ");
-		prodHash.put("00020", "Plastic cups     ");
 	}
 	
 	static String prodId;
@@ -48,32 +40,76 @@ public class Store{
 	
 	
 	static double cash;
+
 	
-	public static void buyProd(){
-		try {
-		Collections.addAll(quantity, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100);
-		Collections.addAll(price,230.00, 2000.00, 2500.00, 130.00, 250.00, 25.00, 180.00 , 100.00, 300.00, 270.00, 
-                                                   85.00, 70.00, 150.00, 45.00, 50.00, 100.00, 100.00, 50.00,  65.00, 30.00);
-			products();		
-			System.out.println("\t \t \t==================================================================================================================");
-			System.out.println("\t \t \t \t" + "Code \t " + "Product \t \t \t \t \t \t \t" + "Quantity    " + "Price \n");
-			
-			
-			
-			int incre = 0;
-			for(Map.Entry <String , String> e : prodHash.entrySet()) {
-				for (int i = 0; i < 1; i++) {
-					
-					System.out.print("\t \t \t \t" + e.getKey());
-					System.out.print("\t" + e.getValue());
-					
-					System.out.print("\t \t \t \t \t \t" + quantity.get(incre));
-					System.out.println("         "  + price.get(incre));
-					incre++;
-				}
+	static Queue <String> cancProd = new LinkedList();
+	public static void displayPayment() {
+		Scanner scn = new Scanner(System.in);
+		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------");
+	  	System.out.println("\t \t \t \t \t \t \t \t \t \tTAXABLE TOTAL    : " + c.withoutCharge);
+		double vat = Math.round(c.vat * 100)/ 100;
+
+	  	System.out.println("\t \t \t \t \t \t \t \t \t \tVat(12%)         : " + vat + "\n");
+	  	System.out.println("\t \t \t \t \t \t \t \t \t \tTOTAL            : " + c.allTotal);
+
+		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
+		System.out.println("\t \t \t \t" + "==================================");
+	    System.out.println("\t \t \t \t" + "| 1. Pay                         |");
+	    System.out.println("\t \t \t \t" + "| 2. Cancel the products         |");
+	
+	    System.out.println("\t \t \t \t" + "==================================");
+	    System.out.print("\t \t \t \t" + "Enter your choice: ");
+	    int choice = scn.nextInt();
+	  
+		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
+
+	    switch(choice) {
+	    
+	    case 1:
+	    	while(!cancProd.isEmpty()) {
+		  		cancProd.poll();
+		  	}
+			System.out.print("\t \t \t \t \t \t \t \t \t \t \t AMOUNT  : ");
+			cash = scn.nextDouble();
+			if(cash < c.allTotal) {
+				System.out.println("\t \t \t \t" + "The cash is not enough");
+				displayPayment();
+			}
+			else {
+				Admin.moneyInvent.offer(c.allTotal);
+				double change = cash - c.allTotal;
+			  	System.out.println("\t \t \t \t \t \t \t \t \t \t \t CASH    : " + cash);
+			  	System.out.printf("\t \t \t \t \t \t \t \t \t \t \t CHANGE  : %.2f" , change);
+			  	System.out.println(" ");
+			  	//Admin.cashOn.offer(c.pricewCharge);
+			  	c.resetPrices();
+			  	Products.run();
 			}
 			
+		  	break;
+	    case 2:
+	    	c.resetPrices();
+	    	cancelProduct();
+	    	break;
+	   
+	    default:
+	    	displayPayment();
+	    }
+	    	
+	    
+	}
+	
+	
+	
+	public static void buyProd(){
+	
+		try {
 			
+			Collections.addAll(quantity, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100);
+			Collections.addAll(price,230.00, 2000.00, 2500.00, 130.00, 250.00, 25.00, 180.00 , 100.00, 300.00, 270.00, 85.00, 70.00, 150.00);
+			products();		
+			allProd();
+
 			System.out.println("\t \t \t==================================================================================================================");
 			
 			boolean a = true;
@@ -85,7 +121,6 @@ public class Store{
 				
 				if(prodId.equalsIgnoreCase("X") ) {
 					if(prodId.isEmpty()) {
-						c.computationProcessCancel();
 						displayPayment();
 					}
 					break;
@@ -100,7 +135,7 @@ public class Store{
 						resultQuant.offer(qt);
 				}
 			}
-	System.out.println("");
+			System.out.println("");
 			System.out.println("\t \t \t==================================================================================================================");
 			System.out.println("\t \t \t \t|Product| \t \t \t \t \t|Quantity|         |Price|");
 			System.out.println("\t \t \t==================================================================================================================");
@@ -130,77 +165,234 @@ public class Store{
 						}
 					}	 
 				}
-			}
-			c.computationProcess();
+			}						
+			c.computationNoCancel();
 			displayPayment();
 		}
 			catch(InputMismatchException e) {
 				System.out.println("\t \t \t \tPlease try again");
-				Products.displayMenu();
+				Products.run();
 			}
 	}
 	
-	public static void displayPayment() {
-		Scanner scn = new Scanner(System.in); 
 	
+	static Queue <Double> minus = new LinkedList();
+	static Queue <Integer> invent = new LinkedList();
+	static Queue <Double> minusCanc = new LinkedList();
+	static Queue <Integer> inventCanc = new LinkedList();
+	
+	public static void allProd() {
+		
+		while(!minus.isEmpty()) {
+			double num = minus.poll();
+			int num2 = (int) num;
+			inventCanc.offer(num2);
+		}
+		
+		while(!minusCanc.isEmpty()) {
+			double num = minusCanc.poll();
+			int num2 = (int) num;
+			inventCanc.offer(num2);
+		}
+		System.out.println("\t \t \t==================================================================================================================");
+		System.out.println("\t \t \t \tCode \tProduct \t \t \t \t \t \t \tQuantity \t \tPrice");
+		System.out.println("\t \t \t==================================================================================================================");
+		
+		int incre = 0;
+		for(Map.Entry <String , String> e : prodHash.entrySet()) {
+			for (int i = 0; i < 1; i++) {
+				
+				System.out.print("\t \t \t \t" + e.getKey());
+				System.out.print("\t" + e.getValue());
+				
+				if(!invent.isEmpty()) {
+					int a = quantity.get(incre) - invent.poll();
+					System.out.print("\t \t \t \t \t \t" + a);
+					quantity.set(incre, a);
+
+				}
+				else if(!inventCanc.isEmpty()) {
+					int b = quantity.get(incre) - inventCanc.poll();
+					System.out.print("\t \t \t \t \t \t" + b);
+					quantity.set(incre, b);
+
+				}
+				else {
+					System.out.print("\t \t \t \t \t \t" + quantity.get(incre));
+				}
+				System.out.println(" \t \t"  + price.get(incre));
+				incre++;
+			}
+		}
+	}
+	
+
+	static Queue <Double> quant = new LinkedList();
+	static Queue <String> cancProd2 = new LinkedList();
+	static Queue <Double> quant2 = new LinkedList(); 
+	static Queue <String> cancProd3 = new LinkedList();
+
+	static Queue <Double> orderedPrice2 = new LinkedList();
+
+	static Queue <String> cancels = new LinkedList();
+	static Queue <Double> cancelsPrice = new LinkedList();
+	static Queue <String> cancels2 = new LinkedList(); 
+	
+	static Queue <Double> cancelsPrice2 = new LinkedList();
+	static Queue <Double> quant3 = new LinkedList(); 
+	
+	public static void cancelProduct() {
+		String prodIdCanc;
+		while(true) {
+			System.out.println("\t \t \t \t" + "PLEASE TYPE [X] WHEN YOU ARE DONE.");
+			System.out.print("\t \t \t \t" + "Enter product id: \t \t");
+			prodIdCanc = scn.next();
+			
+			if(prodIdCanc.equalsIgnoreCase("x")) {
+				break;
+			}
+			else {
+				cancels.offer(prodIdCanc);
+			}
+			
+		}
+	
+		/*int incre5 = 0;
+		while(!cancels.isEmpty()) {
+		for(Map.Entry <String , String> e : prodHash.entrySet()) {
+			if(e.getKey().equals(cancels.peek())) {
+				cancProd.poll();
+				orderedQuantity.poll();
+				orderedPrice.poll();													//nagbabawas
+				cancels.poll();
+				
+			}
+			else {
+				orderedPrice2.offer(orderedPrice.poll());
+				
+				
+				cancProd2.offer(cancProd.poll());                     //inilipat
+				quant.offer(orderedQuantity.poll());
+			
+				incre5++;
+			}
+		}*/
+
+			for(Map.Entry <String , String> e : prodHash.entrySet()) {
+					if(e.getKey().equals(cancels.peek())) { // keme.peek
+						
+						cancProd.poll();  // Key
+						
+						orderedQuantity.poll();
+						orderedPrice.poll();
+																						//nagbabawas
+						cancels.poll();
+					}
+					else {
+						
+						orderedPrice2.offer(orderedPrice.poll());
+						
+						
+						cancProd2.offer(cancProd.poll());                     //inilipat
+						quant.offer(orderedQuantity.poll());
+					}
+				}	 
+				
+				
+		
+		System.out.println("\t \t \t==================================================================================================================");
+		System.out.println("\t \t \t \t|Product| \t \t \t \t \t|Quantity|         |Price|");
+		System.out.println("\t \t \t==================================================================================================================");
+		
+	
+		int incre5 = 0;
+		for(Map.Entry <String , String> e : prodHash.entrySet()) {
+			if(e.getValue().equals(cancProd2.peek())) {
+				
+				System.out.print("\t \t \t \t" + cancProd2.peek());
+				System.out.print(" \t \t \t \t" + quant.peek() + "\t");
+				System.out.println("         "+ price.get(incre5));
+				
+				cancelsPrice2.offer(price.get(incre5));
+				quant3.offer(quant.poll());
+				cancProd2.poll();
+				incre5++;
+			}
+			else {
+				incre5++;
+			}
+		}	
+		
+		
+		
+		
+		
+		if (cancProd2.isEmpty() || quant.isEmpty() || quant3.isEmpty() || price.isEmpty()) {
+		    System.out.println("No canceled products to display or some data is missing.");
+		    Products.run();
+		} else {
+
+		    c.computationCancel();
+		    displayPaymentCancelled();
+		}
+
+	}
+	
+	public static void displayPaymentCancelled() {
+		
+		Scanner scn = new Scanner(System.in);
 		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------");
 		
-	  	System.out.println("\t \t \t \t \t \t \t \t \t \tTAXABLE TOTAL    : " + c.totalPrice);
-	  	System.out.println("\t \t \t \t \t \t \t \t \t \tVat(12%)         : " + c.vatPrice + "\n");
-	  	System.out.println("\t \t \t \t \t \t \t \t \t \tTOTAL            : " + c.pricewCharge);
+	  	System.out.println("\t \t \t \t \t \t \t \t \t \tTAXABLE TOTAL    : " + c.withoutCharge2);
+		double vat2 = Math.round(c.vat2 * 100)/ 100;
+
+	  	System.out.println("\t \t \t \t \t \t \t \t \t \tVat(12%)%        : " + vat2 + "\n");
+	  	System.out.println("\t \t \t \t \t \t \t \t \t \tTOTAL            : " + c.allTotal2);
 
 		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
 		System.out.println("\t \t \t \t" + "==================================");
 	    System.out.println("\t \t \t \t" + "| 1. Pay                         |");
 	    System.out.println("\t \t \t \t" + "| 2. Cancel the products         |");
-	    System.out.println("\t \t \t \t" + "| 3. Exit                        |");
-	    System.out.println("\t \t \t \t" + "| 4. Menu                        |");
 	    System.out.println("\t \t \t \t" + "==================================");
 	    System.out.print("\t \t \t \t" + "Enter your choice: ");
 	    int choice = scn.nextInt();
-	    while(!cancProd.isEmpty()) {
-	    	Admin.soldProd.offer(cancProd.poll());
-	    }
-		
+	  
+		System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
 
 	    switch(choice) {
 	    
 	    case 1:
-		  	System.out.print("\t \t \t \t \t \t \t \t \t \t \t AMOUNT  : ");
+	    	
+			System.out.print("\t \t \t \t \t \t \t \t \t \t \t AMOUNT  : ");
 			cash = scn.nextDouble();
-			double change = cash - c.pricewCharge;
-			Math.round(change);
-		  	System.out.println("\t \t \t \t \t \t \t \t \t \t \t CASH    : " + cash);
-		  	System.out.println("\t \t \t \t \t \t \t \t \t \t \t CHANGE  : " + change);
-		  	Admin.cashOn.offer(c.pricewCharge);
-		  
+			if(cash < c.allTotal2) {
+				System.out.println("\t \t \t \t" + "The cash is not enough");
+				displayPaymentCancelled();
+			}
+			else {
+				double change = cash - c.allTotal2;
+				double b = Math.round(change * 100.0)/100.0;
+			  	System.out.println("\t \t \t \t \t \t \t \t \t \t \t CASH    : " + cash);
+			  	System.out.printf("\t \t \t \t \t \t \t \t \t \t \t CHANGE   : " + "%.2f", b );
+			  	System.out.println(" ");
+			  	Admin.moneyInvent.offer(c.allTotal2);
+			}
+		  	while(!cancProd2.isEmpty()) {
+		  		cancProd2.poll();
+		  	}
+		  	c.resetPrices2();
+		  	Products.run();
 		  	break;
-	    
-            case 2:
-                cancelProduct();
-                break;
-            case 3:
-                break;
-            case 4:
-                Products.displayMenu();
-                break;
-            default:
-                System.out.println("\t \t \t \t" + "Invalid input. Try again.");
-                System.out.println("\t \t \t------------------------------------------------------------------------------------------------------------------\n");
-        }
-            
-        }
-	static Queue <Double> quant = new LinkedList();
-	static Queue <String> cancProd2 = new LinkedList();
-	static Queue <Double> quant2 = new LinkedList(); 
-	static Queue <String> cancProd3 = new LinkedList();
+	    case 2:
+	    	c.resetPrices2();
+	    	cancelProduct();
+	    	break;
 	
-	public static void cancelProduct() {
-		while(!resultName.isEmpty()) {
-			resultName.poll();
-			resultQuant.poll();
-
-		}   
-            
+	    	//Admin.display();
+	    }
+	    	
+	    
 	}
+	
+	
 }
