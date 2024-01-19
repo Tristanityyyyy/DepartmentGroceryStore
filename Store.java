@@ -107,7 +107,7 @@ public class Store{
 			
 			Collections.addAll(quantity, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100);
 			Collections.addAll(price,230.00, 2000.00, 2500.00, 130.00, 250.00, 25.00, 180.00 , 100.00, 300.00, 270.00, 85.00, 70.00, 150.00);
-			products();		
+					
 			allProd();
 
 			System.out.println("\t \t \t==================================================================================================================");
@@ -182,7 +182,7 @@ public class Store{
 	static Queue <Integer> inventCanc = new LinkedList();
 	
 	public static void allProd() {
-		
+		products();
 		while(!minus.isEmpty()) {
 			double num = minus.poll();
 			int num2 = (int) num;
@@ -194,9 +194,6 @@ public class Store{
 			int num2 = (int) num;
 			inventCanc.offer(num2);
 		}
-		System.out.println("\t \t \t==================================================================================================================");
-		System.out.println("\t \t \t \tCode \tProduct \t \t \t \t \t \t \tQuantity \t \tPrice");
-		System.out.println("\t \t \t==================================================================================================================");
 		
 		int incre = 0;
 		for(Map.Entry <String , String> e : prodHash.entrySet()) {
