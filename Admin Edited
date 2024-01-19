@@ -1,4 +1,4 @@
-package Admin;
+package package1;
 import java.util.*;
 
 public class Admin{
@@ -6,7 +6,8 @@ public class Admin{
 	static Queue <Double> adminInvent = new LinkedList();
 	static Queue <Double> moneyInvent = new LinkedList();
 	static Computation c = new Computation();
-	
+	static Store s = new Store();
+
 	static void invent() {
 		while(c.allTotal > 0) {
 			adminInvent.offer(c.allTotal);
@@ -33,10 +34,10 @@ public class Admin{
 		switch(choice) {
 		
 		case 1:
-			Store.allProd();
+			
 			double sum = 0;
-			while(moneyInvent.isEmpty()) {
-				sum = moneyInvent.poll();
+			while(!moneyInvent.isEmpty()) {
+				sum += moneyInvent.poll();
 			}
 			if(sum > 0) {
 				System.out.println(" ");
@@ -46,12 +47,14 @@ public class Admin{
 				System.out.println(" ");
 				System.out.println("\t \t \t \t There are no money in the cashier");
 			}
+			Admin.invent();
 			break;
 		case 2:
 			createAcc();
 			break;
 		case 3:
 			Products.main(null);
+			break;
 		}
 		
 		
